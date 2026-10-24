@@ -1,0 +1,32 @@
+{{define "title"}}{{.Title}} — nagara{{end}}
+{{define "content"}}
+<article class="watch" data-player data-title="{{.Title}}">
+  <div class="stage">
+    <video src="/media/{{.ID}}" controls playsinline preload="metadata" data-video></video>
+    <div class="listening">
+      <p class="listening-note">画面を閉じても、再生は続きます</p>
+      <audio src="/media/{{.ID}}" controls preload="none" data-audio></audio>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button type="button" class="toggle" aria-pressed="false" data-listen>ながら再生</button>
+    <div class="speeds" role="group" aria-label="再生速度">
+      <button type="button" aria-pressed="true" data-speed="1">1×</button>
+      <button type="button" aria-pressed="false" data-speed="1.25">1.25×</button>
+      <button type="button" aria-pressed="false" data-speed="1.5">1.5×</button>
+      <button type="button" aria-pressed="false" data-speed="2">2×</button>
+    </div>
+  </div>
+
+  <header class="watch-header">
+    <h1>{{.Title}}</h1>
+    <p class="watch-meta">
+      <time datetime="{{.CreatedAt.Format "2006-01-02"}}">{{date .CreatedAt}}</time>
+      {{with clock .Duration}}<span>{{.}}</span>{{end}}
+    </p>
+  </header>
+  {{with .Description}}<div class="description">{{.}}</div>{{end}}
+</article>
+<script src="/static/player.js" defer></script>
+{{end}}
