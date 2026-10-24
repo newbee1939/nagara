@@ -1,0 +1,28 @@
+{{define "title"}}投稿する — nagara{{end}}
+{{define "content"}}
+<h1 class="page-title">投稿する</h1>
+
+<form class="upload" method="post" action="/videos" enctype="multipart/form-data" data-upload>
+  <label class="field">
+    <span class="field-label">動画ファイル <small>MP4 / WebM</small></span>
+    <input type="file" name="media" accept="video/mp4,video/webm" required data-media>
+    {{with .Errors.media}}<span class="field-error">{{.}}</span>{{end}}
+  </label>
+  <input type="hidden" name="duration" data-duration>
+
+  <label class="field">
+    <span class="field-label">タイトル</span>
+    <input type="text" name="title" value="{{.Title}}" maxlength="100" required placeholder="5分で理解するSRE">
+    {{with .Errors.title}}<span class="field-error">{{.}}</span>{{end}}
+  </label>
+
+  <label class="field">
+    <span class="field-label">説明 <small>任意</small></span>
+    <textarea name="description" rows="8" maxlength="5000" placeholder="話していること、参考リンク、コードなど">{{.Description}}</textarea>
+    {{with .Errors.description}}<span class="field-error">{{.}}</span>{{end}}
+  </label>
+
+  <button class="button" type="submit" data-submit>公開する</button>
+</form>
+<script src="/static/upload.js" defer></script>
+{{end}}

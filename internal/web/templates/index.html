@@ -1,0 +1,26 @@
+{{define "content"}}
+<form class="search" action="/" role="search">
+  <input type="search" name="q" value="{{.Query}}" placeholder="キーワードで探す" aria-label="キーワードで探す">
+</form>
+
+{{if .Videos}}
+<ol class="episodes">
+  {{range .Videos}}
+  <li>
+    <a class="episode" href="/videos/{{.ID}}">
+      <span class="episode-meta">
+        <time datetime="{{.CreatedAt.Format "2006-01-02"}}">{{date .CreatedAt}}</time>
+        {{with clock .Duration}}<span>{{.}}</span>{{end}}
+      </span>
+      <span class="episode-title">{{.Title}}</span>
+      {{with .Description}}<span class="episode-summary">{{.}}</span>{{end}}
+    </a>
+  </li>
+  {{end}}
+</ol>
+{{else if .Query}}
+<p class="empty">「{{.Query}}」に合う動画はありませんでした。</p>
+{{else}}
+<p class="empty">まだ動画がありません。<a href="/upload">最初の 1 本を投稿する</a></p>
+{{end}}
+{{end}}
